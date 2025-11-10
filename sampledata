@@ -1,0 +1,39 @@
+// SampleApp.java
+// This code intentionally includes common Java issues for DeepSource analysis
+
+import java.util.*;
+
+public class SampleApp {
+
+    private static List<String> names = new ArrayList<>(); // Unused variable (DeepSource detects)
+
+    public static void main(String[] args) {
+        System.out.println("Starting program...");
+
+        SampleApp app = new SampleApp();
+        app.sayHello(null); // Passing null — potential NullPointerException
+        app.calculateAverage(new int[]{10, 0, 5, 20});
+        app.unusedMethod(); // Unused private method warning
+    }
+
+    public void sayHello(String name) {
+        // Null check missing (DeepSource: possible NullPointerException)
+        System.out.println("Hello " + name.toUpperCase());
+    }
+
+    public double calculateAverage(int[] numbers) {
+        int total = 0;
+        for (int i = 0; i <= numbers.length; i++) { // ❌ Off-by-one error (ArrayIndexOutOfBoundsException)
+            total += numbers[i];
+        }
+        double avg = total / numbers.length; // ❌ Integer division used for average
+        System.out.println("Average: " + avg);
+        return avg;
+    }
+
+    private void unusedMethod() {
+        int a = 10; // ❌ Unused variable
+        int b = 20; // ❌ Unused variable
+        // No operation
+    }
+}
